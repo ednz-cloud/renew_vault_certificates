@@ -8,3 +8,10 @@
   delegate_to: localhost
   run_once: true
 
+- name: "Create directory {{ renew_vault_certificates_config_dir }}"
+  ansible.builtin.file:
+    path: "{{ renew_vault_certificates_config_dir }}"
+    state: directory
+    owner: "{{ renew_vault_certificates_vault_user }}"
+    group: "{{ renew_vault_certificates_vault_group }}"
+    mode: '0755'

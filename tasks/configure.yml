@@ -1,0 +1,12 @@
+---
+# task/configure file for renew_vault_certificates
+- name: "Copy vault_cert.pem.tpl template"
+  ansible.builtin.template:
+    src: vault_cert.tpl.j2
+    dest: "{{ renew_vault_certificates_config_dir }}/vault_cert.pem.tpl"
+    owner: "{{ renew_vault_certificates_vault_user }}"
+    group: "{{ renew_vault_certificates_vault_group }}"
+    mode: '0600'
+  notify:
+    - "systemctl-enable-vault-ctpl"
+    - "systemctl-restart-vault-ctpl"

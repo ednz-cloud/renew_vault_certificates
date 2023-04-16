@@ -1,2 +1,7 @@
 ---
 # task/main file for renew_vault_certificates
+- name: "Import prerequisites.yml"
+  ansible.builtin.include_tasks: prerequisites.yml
+
+- name: "Import install.yml"
+  ansible.builtin.include_tasks: install.yml

@@ -6,26 +6,19 @@ vault {
 }
 
 template {
-  source      = "/etc/consul-template/ednz.pem.tpl"
-  destination = "/opt/vault/tls/ednz.pem"
+  source      = "{{ renew_vault_certificates_config_dir }}/vault_cert.pem.tpl"
+  destination = "{{ renew_vault_certificates_cert_dest }}"
   perms       = 0700
-  user        = "vault"
-  group       = "vault"
+  user        = "{{ renew_vault_certificates_vault_user }}"
+  group       = "{{ renew_vault_certificates_vault_group }}"
   command     = "sh -c 'date && pkill -SIGHUP vault'"
 }
 
 template {
-  source      = "/etc/consul-template/ednz.key.tpl"
-  destination = "/opt/vault/tls/ednz.key"
+  source      = "{{ renew_vault_certificates_config_dir }}/vault_key.pem.tpl"
+  destination = "{{ renew_vault_certificates_key_dest }}"
   perms       = 0700
-  user        = "vault"
-  group       = "vault"
+  user        = "{{ renew_vault_certificates_vault_user }}"
+  group       = "{{ renew_vault_certificates_vault_group }}"
   command     = "sh -c 'date && pkill -SIGHUP vault'"
-}
-
-template {
-  source      = "/etc/consul-template/ca.crt.tpl"
-  destination = "/opt/vault/tls/ca.crt"
-  user        = "vault"
-  group       = "vault"
 }
