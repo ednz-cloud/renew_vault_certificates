@@ -1,0 +1,10 @@
+---
+# task/prerequisites file for renew_vault_certificates
+- name: "Install required roles"
+  ansible.builtin.command:
+    cmd: "ansible-galaxy install {{ item }}"
+  loop: "{{ renew_vault_certificates_prerequisites_roles }}"
+  changed_when: false
+  delegate_to: localhost
+  run_once: true
+

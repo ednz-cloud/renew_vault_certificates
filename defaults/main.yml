@@ -1,0 +1,16 @@
+---
+# defaults file for renew_vault_certificates
+renew_vault_certificates_config_dir: /etc/consul-template.d/vault
+renew_vault_certificates_vault_user: vault
+renew_vault_certificates_vault_group: vault
+renew_vault_certificates_vault_addr: "https://127.0.0.1:8200"
+renew_vault_certificates_vault_token: mysupersecretvaulttokenthatyoushouldchange
+renew_vault_certificates_vault_token_unwrap: false
+renew_vault_certificates_vault_token_renew: true
+renew_vault_certificates_cert_dest: /opt/vault/tls/cert.pem
+renew_vault_certificates_key_dest: /opt/vault/tls/key.pem
+renew_vault_certificates_info:
+  issuer_path: pki/issue/your-issuer
+  common_name: openstack01.ednz.fr
+  ttl: 90d
+  include_localhost: true

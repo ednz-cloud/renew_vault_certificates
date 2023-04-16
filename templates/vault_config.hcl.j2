@@ -1,0 +1,31 @@
+vault {
+  address      = "{{ renew_vault_certificates_vault_addr }}"
+  token        = "hvs.wKkE4dPFMQLdApisRxNK3uJo"
+  unwrap_token = false
+  renew_token  = false
+}
+
+template {
+  source      = "/etc/consul-template/ednz.pem.tpl"
+  destination = "/opt/vault/tls/ednz.pem"
+  perms       = 0700
+  user        = "vault"
+  group       = "vault"
+  command     = "sh -c 'date && pkill -SIGHUP vault'"
+}
+
+template {
+  source      = "/etc/consul-template/ednz.key.tpl"
+  destination = "/opt/vault/tls/ednz.key"
+  perms       = 0700
+  user        = "vault"
+  group       = "vault"
+  command     = "sh -c 'date && pkill -SIGHUP vault'"
+}
+
+template {
+  source      = "/etc/consul-template/ca.crt.tpl"
+  destination = "/opt/vault/tls/ca.crt"
+  user        = "vault"
+  group       = "vault"
+}

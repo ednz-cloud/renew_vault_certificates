@@ -1,0 +1,3 @@
+{% raw %}{{ with secret {% endraw %}"{{ renew_vault_certificates_info['issuer_path'] }}" "common_name={{ renew_vault_certificates_info['common_name']}}" "ttl={{ renew_vault_certificates_info['ttl']}}" {% if renew_vault_certificates_info['include_localhost']%}"alt_names=localhost" "ip_sans=127.0.0.1" {% endif %}{% raw %}}}{% endraw %}
+{% raw %}{{ .Data.private_key }}{% endraw %}
+{% raw %}{{ end }}{% endraw %}

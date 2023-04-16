@@ -1,0 +1,24 @@
+---
+# meta file for renew_vault_certificates
+galaxy_info:
+  namespace: 'ednxzu'
+  role_name: 'renew_vault_certificates'
+  author: 'Bertrand Lanson'
+  description: 'Install and configure consul-template for vault TLS certificates renewal for debian-based distros.'
+  license: 'license (BSD, MIT)'
+  min_ansible_version: '2.10'
+  platforms:
+    - name: Ubuntu
+      versions:
+        - focal
+        - jammy
+    - name: Debian
+      versions:
+        - bullseye
+  galaxy_tags:
+    - 'ubuntu'
+    - 'debian'
+    - 'hashicorp'
+    - 'vault'
+
+dependencies: []

@@ -1,0 +1,17 @@
+---
+# vars file for renew_vault_certificates
+renew_vault_certificates_prerequisites_roles:
+  - ednxzu.manage_repositories
+  - ednxzu.manage_apt_packages
+renew_vault_certificates_repository:
+  - uri: "https://apt.releases.hashicorp.com"
+    gpg_key: "https://apt.releases.hashicorp.com/gpg"
+    comments: "hashicorp repository"
+    type: "deb"
+    suites: "{{ ansible_distribution_release }}"
+    components: "main"
+    filename: "hashicorp"
+renew_vault_certificates_packages:
+  - name: consul-template
+    version: "{{ hashi_vault_version }}"
+    state: present
