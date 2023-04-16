@@ -1,8 +1,8 @@
 vault {
   address      = "{{ renew_vault_certificates_vault_addr }}"
-  token        = "hvs.wKkE4dPFMQLdApisRxNK3uJo"
-  unwrap_token = false
-  renew_token  = false
+  token        = "{{ renew_vault_certificates_vault_token }}"
+  unwrap_token = {{ renew_vault_certificates_vault_token_unwrap|lower }}
+  renew_token  = {{ renew_vault_certificates_vault_token_renew|lower }}
 }
 
 template {
