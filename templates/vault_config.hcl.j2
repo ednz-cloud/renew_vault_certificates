@@ -11,7 +11,7 @@ template {
   perms       = 0700
   user        = "{{ renew_vault_certificates_vault_user }}"
   group       = "{{ renew_vault_certificates_vault_group }}"
-  command     = "sh -c 'date && pkill -SIGHUP vault'"
+  command     = "sh -c 'echo \"$(date) Update certificate and key file for {{ renew_vault_certificates_info['common_name'] }}\" && pkill -SIGHUP vault '"
 }
 
 template {
@@ -20,5 +20,5 @@ template {
   perms       = 0700
   user        = "{{ renew_vault_certificates_vault_user }}"
   group       = "{{ renew_vault_certificates_vault_group }}"
-  command     = "sh -c 'date && pkill -SIGHUP vault'"
+  command     = "sh -c 'echo \"$(date) Update certificate and key file for {{ renew_vault_certificates_info['common_name'] }}\" && pkill -SIGHUP vault '"
 }
