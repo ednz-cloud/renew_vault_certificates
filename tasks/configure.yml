@@ -1,6 +1,9 @@
 ---
 # task/configure file for renew_vault_certificates
 - name: "Configure files for vault certificate renewal"
+  notify:
+    - "systemctl-enable-vault-certs"
+    - "systemctl-restart-vault-certs"
   block:
     - name: "Copy vault_cert.pem.tpl template"
       ansible.builtin.template:
@@ -25,9 +28,6 @@
         owner: "{{ renew_vault_certificates_vault_user }}"
         group: "{{ renew_vault_certificates_vault_group }}"
         mode: '0600'
-  notify:
-    - "systemctl-enable-vault-certs"
-    - "systemctl-restart-vault-certs"
 
 - name: "Configure vault-certs systemd service"
   ansible.builtin.template:
