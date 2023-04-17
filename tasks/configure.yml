@@ -1,12 +1,40 @@
 ---
 # task/configure file for renew_vault_certificates
-- name: "Copy vault_cert.pem.tpl template"
-  ansible.builtin.template:
-    src: vault_cert.tpl.j2
-    dest: "{{ renew_vault_certificates_config_dir }}/vault_cert.pem.tpl"
-    owner: "{{ renew_vault_certificates_vault_user }}"
-    group: "{{ renew_vault_certificates_vault_group }}"
-    mode: '0600'
+- name: "Configure files for vault certificate renewal"
+  block:
+    - name: "Copy vault_cert.pem.tpl template"
+      ansible.builtin.template:
+        src: vault_config.hcl.j2
+        dest: "{{ renew_vault_certificates_config_dir }}/vault_config.hcl"
+        owner: "{{ renew_vault_certificates_vault_user }}"
+        group: "{{ renew_vault_certificates_vault_group }}"
+        mode: '0600'
+
+    - name: "Copy vault_cert.pem.tpl template"
+      ansible.builtin.template:
+        src: vault_cert.tpl.j2
+        dest: "{{ renew_vault_certificates_config_dir }}/templates/vault_cert.pem.tpl"
+        owner: "{{ renew_vault_certificates_vault_user }}"
+        group: "{{ renew_vault_certificates_vault_group }}"
+        mode: '0600'
+
+    - name: "Copy vault_cert.key.tpl template"
+      ansible.builtin.template:
+        src: vault_key.pem.tpl.j2
+        dest: "{{ renew_vault_certificates_config_dir }}/templates/vault_key.pem.tpl"
+        owner: "{{ renew_vault_certificates_vault_user }}"
+        group: "{{ renew_vault_certificates_vault_group }}"
+        mode: '0600'
   notify:
-    - "systemctl-enable-vault-ctpl"
-    - "systemctl-restart-vault-ctpl"
+    - "systemctl-enable-vault-certs"
+    - "systemctl-restart-vault-certs"
+
+- name: "Configure vault-certs systemd service"
+  ansible.builtin.template:
+    src: vault-certs.service.j2
+    dest: /etc/systemd/system/vault-certs.service
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - "systemctl-daemon-reload"

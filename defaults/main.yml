@@ -14,3 +14,6 @@ renew_vault_certificates_info:
   common_name: openstack01.ednz.fr
   ttl: 90d
   include_localhost: true
+  include_consul_service: false
+renew_vault_certificates_consul_service_name: vault.service.consul
+renew_vault_certificates_start_service: false
