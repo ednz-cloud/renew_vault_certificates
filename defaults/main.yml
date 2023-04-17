@@ -11,7 +11,7 @@ renew_vault_certificates_cert_dest: /opt/vault/tls/cert.pem
 renew_vault_certificates_key_dest: /opt/vault/tls/key.pem
 renew_vault_certificates_info:
   issuer_path: pki/issue/your-issuer
-  common_name: openstack01.ednz.fr
+  common_name: vault01.example.com
   ttl: 90d
   include_localhost: true
   include_consul_service: false

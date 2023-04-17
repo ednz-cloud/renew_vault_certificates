@@ -5,7 +5,7 @@
     - "systemctl-enable-vault-certs"
     - "systemctl-restart-vault-certs"
   block:
-    - name: "Copy vault_cert.pem.tpl template"
+    - name: "Copy vault_config.hcl template"
       ansible.builtin.template:
         src: vault_config.hcl.j2
         dest: "{{ renew_vault_certificates_config_dir }}/vault_config.hcl"
@@ -15,7 +15,7 @@
 
     - name: "Copy vault_cert.pem.tpl template"
       ansible.builtin.template:
-        src: vault_cert.tpl.j2
+        src: vault_cert.pem.tpl.j2
         dest: "{{ renew_vault_certificates_config_dir }}/templates/vault_cert.pem.tpl"
         owner: "{{ renew_vault_certificates_vault_user }}"
         group: "{{ renew_vault_certificates_vault_group }}"

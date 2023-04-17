@@ -15,3 +15,11 @@
     owner: "{{ renew_vault_certificates_vault_user }}"
     group: "{{ renew_vault_certificates_vault_group }}"
     mode: '0755'
+
+- name: "Create directory {{ renew_vault_certificates_config_dir }}/templates"
+  ansible.builtin.file:
+    path: "{{ renew_vault_certificates_config_dir }}/templates"
+    state: directory
+    owner: "{{ renew_vault_certificates_vault_user }}"
+    group: "{{ renew_vault_certificates_vault_group }}"
+    mode: '0755'

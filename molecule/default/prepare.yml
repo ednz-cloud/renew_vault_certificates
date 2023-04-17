@@ -1,0 +1,15 @@
+---
+- name: Prepare
+  hosts: all
+  tasks:
+    - name: "Create group vault"
+      ansible.builtin.group:
+        name: "vault"
+        state: present
+
+    - name: "Create user vault"
+      ansible.builtin.user:
+        name: "vault"
+        group: "vault"
+        shell: /bin/false
+        state: present
