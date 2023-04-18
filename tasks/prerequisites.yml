@@ -16,7 +16,7 @@
     group: "{{ renew_vault_certificates_vault_group }}"
     mode: '0755'
 
-- name: "Create directory {{ renew_vault_certificates_config_dir }}/templates"
+- name: "Create directory templates directory in {{ renew_vault_certificates_config_dir }}"
   ansible.builtin.file:
     path: "{{ renew_vault_certificates_config_dir }}/templates"
     state: directory

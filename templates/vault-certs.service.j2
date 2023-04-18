@@ -2,11 +2,15 @@
 Description=Automatic renewal of vault certificate using consul-template
 Requires=network-online.target
 After=network-online.target vault.service
+ConditionFileNotEmpty={{ renew_vault_certificates_config_dir }}/vault_config.hcl
 
 [Service]
-Restart=on-failure
+User={{ renew_vault_certificates_vault_user }}
+Group={{ renew_vault_certificates_vault_group }}
 ExecStart=/usr/bin/consul-template $OPTIONS -config={{ renew_vault_certificates_config_dir }}/vault_config.hcl
+ExecReload=/bin/kill --signal HUP $MAINPID
 KillSignal=SIGINT
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
