@@ -13,7 +13,6 @@ renew_vault_certificates_info:
   issuer_path: pki/issue/your-issuer
   common_name: vault01.example.com
   ttl: 90d
-  include_localhost: true
-  include_consul_service: false
+  include_consul_service: true
 renew_vault_certificates_consul_service_name: vault.service.consul
 renew_vault_certificates_start_service: false
