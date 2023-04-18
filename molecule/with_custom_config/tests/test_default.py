@@ -25,8 +25,8 @@ def test_template_files(host):
         assert file.user == "vault"
         assert file.group == "vault"
         assert file.mode == 0o600
-    assert vault_cert_pem_tpl.content_string == '{{ with secret "pki/issue/your-issuer" "common_name=vault01.example.com" "ttl=90d" "alt_names=localhost" "ip_sans=127.0.0.1" }}\n{{ .Data.certificate }}\n{{ .Data.issuing_ca }}\n{{ end }}\n'
-    assert vault_key_pem_tpl.content_string == '{{ with secret "pki/issue/your-issuer" "common_name=vault01.example.com" "ttl=90d" "alt_names=localhost" "ip_sans=127.0.0.1" }}\n{{ .Data.private_key }}\n{{ end }}\n'
+    assert vault_cert_pem_tpl.content_string == '{{ with secret "pki/issue/vault-issuer" "common_name=vault01.example.com" "ttl=90d" "alt_names=localhost,vault.service.consul,active.vault.service.consul,standby.vault.service.consul" "ip_sans=127.0.0.1" }}\n{{ .Data.certificate }}\n{{ .Data.issuing_ca }}\n{{ end }}\n'
+    assert vault_key_pem_tpl.content_string == '{{ with secret "pki/issue/vault-issuer" "common_name=vault01.example.com" "ttl=90d" "alt_names=localhost,vault.service.consul,active.vault.service.consul,standby.vault.service.consul" "ip_sans=127.0.0.1" }}\n{{ .Data.private_key }}\n{{ end }}\n'
 
 def test_vault_certs_service_file(host):
     """Validate vault-certs service file."""

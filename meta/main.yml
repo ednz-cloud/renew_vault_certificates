@@ -4,7 +4,7 @@ galaxy_info:
   namespace: 'ednxzu'
   role_name: 'renew_vault_certificates'
   author: 'Bertrand Lanson'
-  description: 'Install and configure consul-template for vault TLS certificates renewal for debian-based distros.'
+  description: 'Install and configure consul-template to renew vault TLS certificates for debian-based distros.'
   license: 'license (BSD, MIT)'
   min_ansible_version: '2.10'
   platforms:
