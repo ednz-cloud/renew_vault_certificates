@@ -37,7 +37,7 @@ variables:
 
 .script-molecule-test-with-custom-config:
   script:
-    - molecule test -s with_acl_enabled
+    - molecule test -s with_custom_config
 
 ansible-verify:
   stage: verify
