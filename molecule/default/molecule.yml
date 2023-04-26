@@ -21,14 +21,10 @@ provisioner:
       remote_tmp: /tmp/.ansible
 verifier:
   name: testinfra
-lint: |
-  yamllint -c .yamllint .
-  ansible-lint
 scenario:
   name: default
   test_sequence:
     - dependency
-    - lint
     - cleanup
     - destroy
     - syntax
