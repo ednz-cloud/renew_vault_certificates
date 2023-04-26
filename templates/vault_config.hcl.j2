@@ -15,7 +15,7 @@ template {
 }
 
 template {
-  source      = "{{ renew_vault_certificates_config_dir }}/template/vault_key.pem.tpl"
+  source      = "{{ renew_vault_certificates_config_dir }}/templates/vault_key.pem.tpl"
   destination = "{{ renew_vault_certificates_key_dest }}"
   perms       = 0700
   user        = "{{ renew_vault_certificates_vault_user }}"
