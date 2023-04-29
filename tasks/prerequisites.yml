@@ -23,3 +23,14 @@
     owner: "{{ renew_vault_certificates_vault_user }}"
     group: "{{ renew_vault_certificates_vault_group }}"
     mode: '0755'
+
+- name: "Ensure certificate/key directory(ies) exist(s)"
+  ansible.builtin.file:
+    path: "{{item | dirname }}"
+    state: directory
+    owner: "{{ renew_vault_certificates_vault_user }}"
+    group: "{{ renew_vault_certificates_vault_group }}"
+    mode: '0755'
+  loop:
+    - "{{ renew_vault_certificates_cert_dest }}"
+    - "{{ renew_vault_certificates_key_dest }}"
