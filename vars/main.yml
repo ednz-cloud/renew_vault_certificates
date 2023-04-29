@@ -13,5 +13,5 @@ renew_vault_certificates_repository:
     filename: "hashicorp"
 renew_vault_certificates_packages:
   - name: consul-template
-    version: "{{ hashi_vault_version }}"
+    version: latest
     state: present
