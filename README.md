@@ -62,6 +62,7 @@ This variable defines where to copy the private keys upon renewal. Default to `/
 renew_vault_certificates_info: # by default, set to:
   issuer_path: pki/issue/your-issuer
   common_name: vault01.example.com
+  ip_addr: "192.168.1.1"
   ttl: 90d
   include_consul_service: false
 ```
