@@ -11,6 +11,7 @@ renew_vault_certificates_key_dest: /opt/vault/tls/key.pem
 renew_vault_certificates_info:
   issuer_path: pki/issue/vault-issuer
   common_name: vault01.example.com
+  ip_addr: "192.168.1.1"
   ttl: 90d
   include_consul_service: true
 renew_vault_certificates_consul_service_name: vault.service.consul
