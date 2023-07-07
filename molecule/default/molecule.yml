@@ -20,7 +20,7 @@ provisioner:
     defaults:
       remote_tmp: /tmp/.ansible
 verifier:
-  name: testinfra
+  name: ansible
 scenario:
   name: default
   test_sequence:

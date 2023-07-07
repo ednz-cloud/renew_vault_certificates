@@ -1,0 +1,138 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: "Test: file /etc/hosts"
+      block:
+        - name: "Stat file /etc/hosts"
+          ansible.builtin.stat:
+            path: "/etc/hosts"
+          register: stat_etc_hosts
+
+        - name: "Verify file /etc/hosts"
+          ansible.builtin.assert:
+            that:
+              - stat_etc_hosts.stat.exists
+              - stat_etc_hosts.stat.isreg
+              - stat_etc_hosts.stat.pw_name == 'root'
+              - stat_etc_hosts.stat.gr_name == 'root'
+
+    - name: "Test: directory /etc/consul-template.d/vault"
+      block:
+        - name: "Stat directory /etc/consul-template.d/vault"
+          ansible.builtin.stat:
+            path: "/etc/consul-template.d/vault"
+          register: stat_etc_consul_template_d_vault
+
+        - name: "Stat file /etc/consul-template.d/vault/vault_config.hcl"
+          ansible.builtin.stat:
+            path: "/etc/consul-template.d/vault/vault_config.hcl"
+          register: stat_etc_consul_template_d_vault_vault_config_hcl
+
+        - name: "Slurp file /etc/consul-template.d/vault/vault_config.hcl"
+          ansible.builtin.slurp:
+            src: "/etc/consul-template.d/vault/vault_config.hcl"
+          register: slurp_etc_consul_template_d_vault_vault_config_hcl
+
+        - name: "Verify directory /etc/consul-template.d/vault"
+          ansible.builtin.assert:
+            that:
+              - stat_etc_consul_template_d_vault.stat.exists
+              - stat_etc_consul_template_d_vault.stat.isdir
+              - stat_etc_consul_template_d_vault.stat.pw_name == 'vault'
+              - stat_etc_consul_template_d_vault.stat.gr_name == 'vault'
+              - stat_etc_consul_template_d_vault.stat.mode == '0755'
+              - stat_etc_consul_template_d_vault_vault_config_hcl.stat.exists
+              - stat_etc_consul_template_d_vault_vault_config_hcl.stat.isreg
+              - stat_etc_consul_template_d_vault_vault_config_hcl.stat.pw_name == 'vault'
+              - stat_etc_consul_template_d_vault_vault_config_hcl.stat.gr_name == 'vault'
+              - stat_etc_consul_template_d_vault_vault_config_hcl.stat.mode == '0600'
+              - slurp_etc_consul_template_d_vault_vault_config_hcl.content != ''
+
+    - name: "Test: directory /etc/consul-template.d/vault/templates"
+      block:
+        - name: "Stat directory /etc/consul-template.d/vault/templates"
+          ansible.builtin.stat:
+            path: "/etc/consul-template.d/vault/templates"
+          register: stat_etc_consul_template_d_vault_templates
+
+        - name: "Find in directory /etc/consul-template.d/vault/templates"
+          ansible.builtin.find:
+            paths: "/etc/consul-template.d/vault/templates"
+            file_type: file
+          register: find_etc_consul_template_d_vault_templates
+
+        - name: "Stat in directory /etc/consul-template.d/vault/templates"
+          ansible.builtin.stat:
+            path: "{{ item.path }}"
+          loop: "{{ find_etc_consul_template_d_vault_templates.files }}"
+          register: stat_etc_consul_template_d_vault_templates
+
+        - name: "Slurp in directory /etc/consul-template.d/vault/templates"
+          ansible.builtin.slurp:
+            src: "{{ item.path }}"
+          loop: "{{ find_etc_consul_template_d_vault_templates.files }}"
+          register: slurp_etc_consul_template_d_vault_templates
+
+        - name: "Verify file /etc/consul-template.d/vault/templates/vault_cert.pem.tpl"
+          vars:
+            vault_cert_file: |
+              {% raw %}{{ with secret "pki/issue/vault-issuer" "common_name=vault01.example.com" "ttl=90d" "alt_names=localhost,vault.service.consul,active.vault.service.consul,standby.vault.service.consul" "ip_sans=127.0.0.1,192.168.1.1" }}
+              {{ .Data.certificate }}
+              {{ .Data.issuing_ca }}
+              {{ end }}{% endraw %}
+          ansible.builtin.assert:
+            that:
+              - item.item.isreg
+              - item.item.pw_name == 'vault'
+              - item.item.gr_name == 'vault'
+              - item.item.mode == '0600'
+              - "(item.content|b64decode) == vault_cert_file"
+          loop: "{{ slurp_etc_consul_template_d_vault_templates.results }}"
+          when: (item.item.path | basename) == 'vault_cert.pem.tpl'
+
+        - name: "Verify file /etc/consul-template.d/vault/templates/vault_key.pem.tpl"
+          vars:
+            vault_key_file: |
+              {% raw %}{{ with secret "pki/issue/vault-issuer" "common_name=vault01.example.com" "ttl=90d" "alt_names=localhost,vault.service.consul,active.vault.service.consul,standby.vault.service.consul" "ip_sans=127.0.0.1,192.168.1.1" }}
+              {{ .Data.private_key }}
+              {{ end }}{% endraw %}
+          ansible.builtin.assert:
+            that:
+              - item.item.isreg
+              - item.item.pw_name == 'vault'
+              - item.item.gr_name == 'vault'
+              - item.item.mode == '0600'
+              - "(item.content|b64decode) == vault_key_file"
+          loop: "{{ slurp_etc_consul_template_d_vault_templates.results }}"
+          when: (item.item.path | basename) == 'vault_key.pem.tpl'
+
+    - name: "Test: service vault-certs"
+      block:
+        - name: "Get service vault-certs"
+          ansible.builtin.service_facts:
+
+        - name: "Stat file /etc/systemd/system/vault-certs.service"
+          ansible.builtin.stat:
+            path: "/etc/systemd/system/vault-certs.service"
+          register: stat_etc_systemd_system_vault_certs_service
+
+        - name: "Slurp file /etc/systemd/system/vault.service"
+          ansible.builtin.slurp:
+            src: "/etc/systemd/system/vault-certs.service"
+          register: slurp_etc_systemd_system_vault_certs_service
+
+        - name: "Verify service vault"
+          ansible.builtin.assert:
+            that:
+              - stat_etc_systemd_system_vault_certs_service.stat.exists
+              - stat_etc_systemd_system_vault_certs_service.stat.isreg
+              - stat_etc_systemd_system_vault_certs_service.stat.pw_name == 'root'
+              - stat_etc_systemd_system_vault_certs_service.stat.gr_name == 'root'
+              - stat_etc_systemd_system_vault_certs_service.stat.mode == '0644'
+              - slurp_etc_systemd_system_vault_certs_service.content != ''
+              - ansible_facts.services['vault-certs.service'] is defined
+              - ansible_facts.services['vault-certs.service']['source'] == 'systemd'
+              - ansible_facts.services['vault-certs.service']['state'] == 'stopped'
+              - ansible_facts.services['vault-certs.service']['status'] == 'enabled'

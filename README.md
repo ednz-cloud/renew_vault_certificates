@@ -1,4 +1,4 @@
-Renew vault certificates
+renew_vault_certificates
 =========
 > This repository is only a mirror. Development and testing is done on a private gitlab server.
 
