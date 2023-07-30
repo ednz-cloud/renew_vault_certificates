@@ -81,7 +81,8 @@ This variable defines whether or not to start the service after creating it. By 
 Dependencies
 ------------
 
-This role has a task that installs its own dependencies located in `task/prerequisites.yml`, so that you don't need to manage them. This role requires both `ednxzu.manage_repositories` and `ednxzu.manage_apt_packages` to install consul-template.
+`ednxzu.manage_repositories` to configure hashicorp apt repository.
+`ednxzu.manage_apt_packages` to install consul-template.
 
 Example Playbook
 ----------------
