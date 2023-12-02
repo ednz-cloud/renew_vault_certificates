@@ -1,0 +1,18 @@
+---
+renew_vault_certificates_config_dir: /etc/consul-template.d/vault
+renew_vault_certificates_vault_user: vault
+renew_vault_certificates_vault_group: vault
+renew_vault_certificates_vault_addr: "https://vault.example.com"
+renew_vault_certificates_vault_token: mysupersecretvaulttokenthatyoushouldchange
+renew_vault_certificates_vault_token_unwrap: false
+renew_vault_certificates_vault_token_renew: true
+renew_vault_certificates_cert_dest: /opt/vault/tls/cert.pem
+renew_vault_certificates_key_dest: /opt/vault/tls/key.pem
+renew_vault_certificates_info:
+  issuer_path: pki/issue/vault-issuer
+  common_name: vault01.example.com
+  ip_addr: "192.168.1.1"
+  ttl: 90d
+  include_consul_service: true
+renew_vault_certificates_consul_service_name: vault.service.consul
+renew_vault_certificates_start_service: false

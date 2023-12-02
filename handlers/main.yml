@@ -3,17 +3,20 @@
 - name: "Reload service file"
   ansible.builtin.systemd:
     daemon_reload: true
+  become: true
   listen: "systemctl-daemon-reload"
 
 - name: "Enable vault-certs service"
   ansible.builtin.service:
     name: vault-certs
     enabled: true
+  become: true
   listen: "systemctl-enable-vault-certs"
 
 - name: "Start vault-certs service"
   ansible.builtin.service:
     name: vault-certs
     state: restarted
+  become: true
   listen: "systemctl-restart-vault-certs"
   when: renew_vault_certificates_start_service

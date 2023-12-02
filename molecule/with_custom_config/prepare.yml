@@ -6,6 +6,7 @@
       ansible.builtin.group:
         name: "vault"
         state: present
+      become: true
 
     - name: "Create user vault"
       ansible.builtin.user:
@@ -13,3 +14,4 @@
         group: "vault"
         shell: /bin/false
         state: present
+      become: true
