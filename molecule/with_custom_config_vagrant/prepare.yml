@@ -14,4 +14,3 @@
         group: "vault"
         shell: /bin/false
         state: present
-
