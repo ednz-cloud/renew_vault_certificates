@@ -1,7 +1,6 @@
 ---
 # task/configure file for renew_vault_certificates
 - name: "Configure files for vault certificate renewal"
-  become: true
   notify:
     - "systemctl-enable-vault-certs"
     - "systemctl-restart-vault-certs"
@@ -37,6 +36,5 @@
     owner: root
     group: root
     mode: '0644'
-  become: true
   notify:
     - "systemctl-daemon-reload"

@@ -2,6 +2,7 @@
 - name: Verify
   hosts: all
   gather_facts: true
+  become: true
   tasks:
     - name: "Test: directory /etc/consul-template.d/vault"
       block:
@@ -19,7 +20,6 @@
           ansible.builtin.slurp:
             src: "/etc/consul-template.d/vault/vault_config.hcl"
           register: slurp_etc_consul_template_d_vault_vault_config_hcl
-          become: true
 
         - name: "Verify directory /etc/consul-template.d/vault"
           ansible.builtin.assert:
@@ -60,7 +60,6 @@
             src: "{{ item.path }}"
           loop: "{{ find_etc_consul_template_d_vault_templates.files }}"
           register: slurp_etc_consul_template_d_vault_templates
-          become: true
 
         - name: "Verify file /etc/consul-template.d/vault/templates/vault_cert.pem.tpl"
           vars:
@@ -109,9 +108,8 @@
           ansible.builtin.slurp:
             src: "/etc/systemd/system/vault-certs.service"
           register: slurp_etc_systemd_system_vault_certs_service
-          become: true
 
-        - name: "Verify service vault"
+        - name: "Verify service vault-certs"
           ansible.builtin.assert:
             that:
               - stat_etc_systemd_system_vault_certs_service.stat.exists

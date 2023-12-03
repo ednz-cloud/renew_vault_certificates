@@ -1,6 +1,7 @@
 ---
 - name: Converge
   hosts: all
+  become: true
   tasks:
     - name: "Include ednxzu.renew_vault_certificates"
       ansible.builtin.include_role:
