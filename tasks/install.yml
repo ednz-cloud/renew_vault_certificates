@@ -2,7 +2,7 @@
 # task/install file for renew_vault_certificates
 - name: "Configure hashicorp repository"
   ansible.builtin.include_role:
-    name: ednxzu.manage_repositories
+    name: ednz_cloud.manage_repositories
   vars:
     manage_repositories_enable_default_repo: false
     manage_repositories_enable_custom_repo: true
@@ -10,6 +10,6 @@
 
 - name: "Install consul-template"
   ansible.builtin.include_role:
-    name: ednxzu.manage_apt_packages
+    name: ednz_cloud.manage_apt_packages
   vars:
     manage_apt_packages_list: "{{ renew_vault_certificates_packages }}"

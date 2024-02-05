@@ -13,6 +13,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Publish
-        uses: ednxzu/galaxy-import-role@v1
+        uses: ednxzu/galaxy-import-role@v2
         with:
           galaxy-api-key: ${{ secrets.GALAXY_API_TOKEN }}
+          repository-owner: ednxzu
+          repository-name: renew_vault_certificates

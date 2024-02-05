@@ -3,6 +3,6 @@
   hosts: all
   become: true
   tasks:
-    - name: "Include ednxzu.renew_vault_certificates"
+    - name: "Include ednz_cloud.renew_vault_certificates"
       ansible.builtin.include_role:
-        name: "ednxzu.renew_vault_certificates"
+        name: "ednz_cloud.renew_vault_certificates"
